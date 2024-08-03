@@ -1,36 +1,53 @@
-import tkinter as tk
-from tkinter import messagebox
+import customtkinter as ctk
+from PIL import Image
 
-# Create the main application window
-root = tk.Tk()
-root.title("Login Form")
-root.geometry("400x300")
 
-# Username Label and Entry
-username_label = tk.Label(root, text="Username", font=("Arial", 14))
-username_label.pack(pady=10)
-username_entry = tk.Entry(root, font=("Arial", 14))
-username_entry.pack(pady=5)
-
-# Password Label and Entry
-password_label = tk.Label(root, text="Password", font=("Arial", 14))
-password_label.pack(pady=10)
-password_entry = tk.Entry(root, font=("Arial", 14), show="*")
-password_entry.pack(pady=5)
-
-# Login Button
-def login():
-    username = username_entry.get()
-    password = password_entry.get()
-
-    # Here you would typically check the username and password
-    if username == "admin" and password == "password":  # Replace with real authentication logic
-        messagebox.showinfo("Login", "Login successful!")
+def appearance_switch():
+    current_appearance = ctk.get_appearance_mode()
+    if current_appearance == "dark":
+        ctk.set_appearance_mode("light")
     else:
-        messagebox.showerror("Login", "Invalid username or password")
+        ctk.set_appearance_mode("dark")
 
-login_button = tk.Button(root, text="Login", command=login, font=("Arial", 14))
-login_button.pack(pady=20)
+# Initialize the main window
+app = ctk.CTk()
+app.geometry("1024x768")
+app.title("Login")
+
+# Create a frame for the login form
+login_frame = ctk.CTkFrame(master=app, width=650, height=600)
+login_frame.pack(pady=50, padx=50)  # Center the frame with margin
+
+login_frame.pack_propagate(False)
+
+theme_switch = ctk.CTkSwitch(master=login_frame,command=appearance_switch(),text="Switch theme")
+theme_switch.pack(padx=100)
+
+title_label = ctk.CTkLabel(master=login_frame, text="Login", font=("Arial", 24))
+title_label.pack(pady=80)
+
+username_label = ctk.CTkLabel(master=login_frame, text="Username", font=("Arial", 14))
+username_label.pack(pady=10, padx=20, anchor='center')
+username_entry = ctk.CTkEntry(master=login_frame, width=250, placeholder_text="Enter your username")
+username_entry.pack(pady=10)
+
+password_label = ctk.CTkLabel(master=login_frame, text="Password", font=("Arial", 14))
+password_label.pack(pady=10, padx=20, anchor='center')
+password_entry = ctk.CTkEntry(master=login_frame, width=250, placeholder_text="Enter your password", show="*")
+password_entry.pack(pady=10)
+
+button_frame = ctk.CTkFrame(master=login_frame)
+button_frame.pack(pady=20)
+
+login_button = ctk.CTkButton(master=button_frame, text="Login", width=120)
+login_button.pack(side="left", padx=8)
+
+face_icon = ctk.CTkImage(Image.open("images/1231006.png"))
+face_reg = ctk.CTkButton(master=button_frame, image=face_icon, text="", width=120)
+face_reg.pack(side="left", padx=8)
+
+
+# Center the content inside the frame
 
 # Run the application
-root.mainloop()
+app.mainloop()
