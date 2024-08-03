@@ -39,3 +39,4 @@ for person_name in os.listdir(lfw_dir):
 print(f"Loaded {len(known_face_encodings)} face encodings.")
 
 
+
