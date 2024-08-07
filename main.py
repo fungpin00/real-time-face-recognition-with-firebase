@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from PIL import Image
 
+from src.face_detection import open_video
+
 
 def appearance_switch():
     current_appearance = ctk.get_appearance_mode()
@@ -43,7 +45,7 @@ login_button = ctk.CTkButton(master=button_frame, text="Login", width=120)
 login_button.pack(side="left", padx=8)
 
 face_icon = ctk.CTkImage(Image.open("images/1231006.png"))
-face_reg = ctk.CTkButton(master=button_frame, image=face_icon, text="", width=120)
+face_reg = ctk.CTkButton(master=button_frame, image=face_icon, text="", width=120, command=open_video())
 face_reg.pack(side="left", padx=8)
 
 
