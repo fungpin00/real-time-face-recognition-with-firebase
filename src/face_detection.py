@@ -1,68 +1,33 @@
-import face_recognition
 import cv2
-import os
+import numpy as np
 
+# Load the pre-trained face detection model
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-
-
-lfw_dir = 'C:/Users/fungp/OneDrive/Desktop/ai/lfw_funneled'
-
-def detect_face():
-    known_face_encodings = []
-    known_face_names = []
-    count = 0
-    limit = 2
-    for person_name in os.listdir(lfw_dir):
-
-        person_dir = os.path.join(lfw_dir, person_name)
-
-    # Iterate through each image of the person
-        for image_name in os.listdir(person_dir):
-            if count >= limit:
-                break
-            image_path = os.path.join(person_dir, image_name)
-
-        # Load the image
-            image = face_recognition.load_image_file(image_path)
-            showimage = cv2.imread(image_path)
-        # Encode the face
-            face_encodings = face_recognition.face_encodings(image)
-
-            if face_encodings:  # If at least one face was found
-                known_face_encodings.append(face_encodings[0])
-                known_face_names.append(person_name)
-                count += 1
-                cv2.putText(showimage,person_name,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,0),1)
-                cv2.imshow('Image', showimage)
-                cv2.waitKey(0)
-                cv2.destroyAllWindows()
-
-    print(f"Loaded {len(known_face_encodings)} face encodings.")
-
-
-def open_video():
+def open_video(callback):
     video_capture = cv2.VideoCapture(0)
+    if not video_capture.isOpened():
+        print("Camera issue")
+        return
 
     while True:
-        # Capture frame-by-frame
         ret, frame = video_capture.read()
         if not ret:
+            print("Failed to grab frame")
             break
 
-        # Convert the image from BGR (OpenCV format) to RGB (face_recognition format)
-        rgb_frame = frame[:, :, ::-1]
+        # Convert to grayscale for face detection
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        # Find all face locations in the current frame
-        face_locations = face_recognition.face_locations(rgb_frame)
+        # Detect faces
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-        # Draw a rectangle around each face
-        for (top, right, bottom, left) in face_locations:
-            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+        # Draw rectangles around the faces
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-        # Display the resulting frame
-        cv2.imshow('Video', frame)
+        callback(frame)
 
-        # Break the loop when 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

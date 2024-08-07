@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c873d303-a4c5-4bee-a76c-7dd01df1561d" name="Changes" comment="basic interface generated">
+      <change afterPath="$PROJECT_DIR$/src/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/face_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/face_detection.py" afterDir="false" />
@@ -38,7 +40,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/fungpin00/face-recognition-with-lfw-dataset.git&quot;,
-    &quot;accountId&quot;: &quot;9e11bdb7-53e4-4435-b8e6-064a30bdac7f&quot;
+    &quot;accountId&quot;: &quot;aed82675-df97-4474-9d9d-3f092d178784&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -50,17 +52,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.face_detection.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/AI Face Recognition Assignment/pythonProject&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.database.executor": "Run",
+    "Python.face_detection.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/AI Face Recognition Assignment/pythonProject",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\AI Face Recognition Assignment\pythonProject" />
@@ -70,7 +73,29 @@
       <recent name="D:\AI Face Recognition Assignment\pythonProject\src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.database">
+    <configuration name="database" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythonProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/database.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject" />
       <option name="ENV_FILES" value="" />
@@ -95,6 +120,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.database" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -102,7 +128,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+        <option value="bundled-python-sdk-f5635417b835-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18968.29" />
       </set>
     </attachedChunks>
   </component>
@@ -149,5 +175,16 @@
     <MESSAGE value="added dataset and loaded the image succesfully&#10;&#10;added limit to retrieve data" />
     <MESSAGE value="basic interface generated" />
     <option name="LAST_COMMIT_MESSAGE" value="basic interface generated" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
