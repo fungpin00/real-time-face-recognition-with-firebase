@@ -3,6 +3,9 @@ from PIL import Image, ImageTk
 import cv2
 import threading
 
+from src.face_detection import get_known_encoded_values
+from src.face_detection import get_known_names
+
 # Load the pre-trained face detection model
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -18,10 +21,21 @@ class VideoWindow(ctk.CTkToplevel):
         self.running = True
         self.video_capture = cv2.VideoCapture(0)
 
+        # Load known faces and encodings
+        self.known_face_encodings = []  # Populate with encodings
+        self.known_face_names = []      # Populate with corresponding names
+
+        # both are dict
+        self.known_face_encodings = get_known_encoded_values()
+        self.known_face_names = get_known_names()
+
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.update_frame()
 
     def update_frame(self):
+        known_face_encodings = get_known_encoded_values()
+        known_face_names = get_known_names()
+
         if self.running:
             ret, frame = self.video_capture.read()
             if ret:
@@ -31,25 +45,46 @@ class VideoWindow(ctk.CTkToplevel):
                 # Detect faces
                 faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
+                name = "Unauthorized"
+                font_color = (0, 0, 255)  # Red color for Unauthorized
+
                 # Draw rectangles around the faces
                 for (x, y, w, h) in faces:
+                    # Extract the region of interest (ROI) for the detected face
+                    face_roi = frame[y:y+h, x:x+w]
+
+                    # Convert the ROI to RGB (face_recognition uses RGB format)
+                    face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
+
+                    # Get the face encoding for the detected face
+                    face_encodings = face_recognition.face_encodings(face_rgb)
+
+                    if face_encodings:
+                        face_encoding = face_encodings[0]
+                        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+                        face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+                        best_match_index = min(range(len(face_distances)), key=face_distances.__getitem__)
+
+                        if matches[best_match_index]:
+                            name = known_face_names[best_match_index]
+                            font_color = (0, 255, 0)  # Green color for Authorized
+
                     cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
                     # Add text to the top-left of the rectangle
-                    text = "Face" #add logic where default is unauthorized, and when face is recognized then change
-                    # to authroized, and change to font color as well
                     font = cv2.FONT_HERSHEY_SIMPLEX
                     font_scale = 0.6
-                    font_color = (255, 255, 255)  # White color for text
                     thickness = 2
 
                     # Position the text at the top-left corner of the rectangle
-                    cv2.putText(frame, text, (x, y - 10), font, font_scale, font_color, thickness)
+                    cv2.putText(frame, name, (x, y - 10), font, font_scale, font_color, thickness)
 
                 # Convert frame to PhotoImage
                 image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 image = Image.fromarray(image)
                 photo = ImageTk.PhotoImage(image=image)
+
+
 
                 self.video_label.configure(image=photo)
                 self.video_label.image = photo
