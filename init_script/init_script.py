@@ -14,13 +14,13 @@ default_app = firebase_admin.initialize_app(cred_obj, {
 person_ref = db.reference('/')
 
 
-def delete_all_records():
-    person_ref.delete()
-    print("All records are deleted")
-
-
-# clear data first
-delete_all_records()
+# def delete_all_records():
+#     person_ref.delete()
+#     print("All records are deleted")
+#
+#
+# # clear data first
+# delete_all_records()
 
 lfw_dir = '../data'
 known_face_data = {}  # Dictionary to store names and their encodings
