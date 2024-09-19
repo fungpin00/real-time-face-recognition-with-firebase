@@ -28,7 +28,5 @@ def update_username_password():
                     'password': hashed_password
                 })
 
-                print(f"Updated {name}'s username and password")
-
 if __name__ == "__main__":
     update_username_password()

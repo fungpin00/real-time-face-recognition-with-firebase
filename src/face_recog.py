@@ -10,6 +10,7 @@ def start_face_recognition(db_reference):
     if data:
         existing_face_encodings = {}
         existing_face_name = {}
+        # todo (change count if want to include everyone's encoding)
         count = 0
         limit = 20
         for unique_id, person_data in data.items():
@@ -27,6 +28,7 @@ def start_face_recognition(db_reference):
             existing_face_name[unique_id] = name
             count += 1
     # limit data for performance
+    # todo (change count if want to include everyone's encoding)
     count = 0
     limit = 20
     all_encodings = []
@@ -112,11 +114,13 @@ def start_face_recognition(db_reference):
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
         # Display the resulting image
-        cv2.imshow('Video', frame)
+        cv2.imshow('Face recognition', frame)
 
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
+        # todo remove to ensure successful login is returned
 
         # if name != "Unknown":
         #     video_capture.release()

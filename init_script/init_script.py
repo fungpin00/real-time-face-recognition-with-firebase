@@ -70,6 +70,7 @@ def create_new_user_with_image(username, password, file_path):
 
     print(f"New user {username} created successfully with user_id: {user_ref.key}")
 
+# Script to insert all records from lfw dataset to database ( 1 time script )
 # def delete_all_records():
 #     person_ref.delete()
 #     print("All records are deleted")
@@ -124,13 +125,12 @@ def create_new_user_with_image(username, password, file_path):
 
 
 if __name__ == '__main__':
-    # Example usage
     # Path to the image file to upload
-    image_path = 'C:/Users/fungp/PycharmProjects/face-recognition-with-lfw-dataset/images/fungpin.jpg'
+    image_path = 'images/REPLACE_YOUR_IMAGE_PATH_HERE'
 
     # New user information
-    new_username = 'fungpin'
-    new_password = 'fungpin123'
+    new_username = input("Please enter your username: ")
+    new_password = input("Please enter your password: ")
 
     # Call the function to create the new user with image
     create_new_user_with_image(new_username, new_password, image_path)

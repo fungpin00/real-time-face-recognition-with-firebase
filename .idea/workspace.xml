@@ -4,70 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c873d303-a4c5-4bee-a76c-7dd01df1561d" name="Changes" comment="added functional open video cam, able to draw square boxes and add label &#10;&#10;firebase connected">
-      <change afterPath="$PROJECT_DIR$/init_script/upload_image.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/init_script/username_password_script.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LoginUI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/face_recog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pythonProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonProject.iml" afterDir="false" />
+    <list default="true" id="c873d303-a4c5-4bee-a76c-7dd01df1561d" name="Changes" comment="deleted unused file">
+      <change afterPath="$PROJECT_DIR$/images/login_background.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Akhmed_Zakayev/Akhmed_Zakayev_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Akhmed_Zakayev/Akhmed_Zakayev_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Akhmed_Zakayev/Akhmed_Zakayev_0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Chung_Mong-hun/Chung_Mong-hun_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Chung_Mong-hun/Chung_Mong-hun_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Claire_De_Gryse/Claire_De_Gryse_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0004.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0005.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0006.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0007.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0008.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0009.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0010.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0011.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0012.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0013.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0014.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0015.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0016.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0017.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0018.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0019.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Bremer/Paul_Bremer_0020.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Paul_Tracy/Paul_Tracy_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tina_Conner/Tina_Conner_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tony_Stewart/Tony_Stewart_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tony_Stewart/Tony_Stewart_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tony_Stewart/Tony_Stewart_0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tony_Stewart/Tony_Stewart_0004.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tony_Stewart/Tony_Stewart_0005.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Tony_Stewart/Tony_Stewart_0006.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vanessa_Redgrave/Vanessa_Redgrave_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vanessa_Redgrave/Vanessa_Redgrave_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vanessa_Redgrave/Vanessa_Redgrave_0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vanessa_Redgrave/Vanessa_Redgrave_0004.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vanessa_Redgrave/Vanessa_Redgrave_0005.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vincent_Gallo/Vincent_Gallo_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vincent_Gallo/Vincent_Gallo_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Vincent_Gallo/Vincent_Gallo_0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0001.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0003.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0004.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0005.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0006.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0007.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0008.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0009.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/Walter_Mondale/Walter_Mondale_0010.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/init_script/init_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/init_script/init_script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/face_detection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/init_script/username_password_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/init_script/username_password_script.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoginUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/face_recog.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/face_recog.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +66,7 @@
     "Python.main.executor": "Debug",
     "Python.new_entry.executor": "Run",
     "Python.test.executor": "Debug",
+    "Python.testUI.executor": "Run",
     "Python.upload_image.executor": "Run",
     "Python.username_password_script.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -270,7 +214,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723103916633</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added login ui, face recognition, script to upload image from local drive, added storage bucket, enabling upload of image, added username password login method with password hashing">
+      <option name="closed" value="true" />
+      <created>1726729859410</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726729859411</updated>
+    </task>
+    <task id="LOCAL-00006" summary="deleted unused file">
+      <option name="closed" value="true" />
+      <created>1726729915378</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726729915378</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -301,17 +261,8 @@
     <MESSAGE value="basic interface generated" />
     <MESSAGE value="added open video code" />
     <MESSAGE value="added source and updated to firebase" />
-    <option name="LAST_COMMIT_MESSAGE" value="added source and updated to firebase" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/face_recog.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="added login ui, face recognition, script to upload image from local drive, added storage bucket, enabling upload of image, added username password login method with password hashing" />
+    <MESSAGE value="deleted unused file" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted unused file" />
   </component>
 </project>

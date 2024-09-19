@@ -3,11 +3,12 @@ import sys
 
 import firebase_admin.credentials
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont, QColor
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
-    QLineEdit, QLabel, QCheckBox, QMessageBox
+    QApplication, QMessageBox
 )
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
+                             QLineEdit, QPushButton, QCheckBox, QGraphicsDropShadowEffect, QGraphicsOpacityEffect, QFrame)
 from firebase_admin import db
 
 from face_recog import start_face_recognition
@@ -28,148 +29,234 @@ class LoginWindow(QWidget):
 
     def initUI(self):
         self.setWindowTitle('Login')
-        self.setFixedSize(400, 600)
-        self.setStyleSheet("""
+        self.setFixedSize(800, 600)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        # Create main widget and apply shadow
+        main_widget = QWidget(self)
+        main_widget.setStyleSheet("""
             QWidget {
                 background-color: #FFFFFF;
-                font-family: 'Roboto', sans-serif;
-                font-size: 14px;
-                color: #333333;
-            }
-            QLineEdit {
-                padding: 12px;
-                border: 1px solid #CCCCCC;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            }
-            QLineEdit:focus {
-                border-color: #66AFE9;
-                outline: none;
-            }
-            QPushButton {
-                padding: 12px;
-                background-color: #007BFF;
-                color: #FFFFFF;
-                border: none;
-                border-radius: 5px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #0056b3;
-            }
-            QLabel#titleLabel {
-                font-size: 24px;
-                font-weight: bold;
-                margin-bottom: 40px;
-            }
-            QLabel#forgotPassword {
-                color: #007BFF;
-            }
-            QLabel#forgotPassword:hover {
-                color: #0056b3;
+                border-radius: 10px;
+                font: 14px bold 'Segoe UI';
             }
         """)
+        shadow = QGraphicsDropShadowEffect(self)
+        shadow.setBlurRadius(20)
+        shadow.setColor(QColor(0, 0, 0, 100))
+        shadow.setOffset(0, 0)
+        main_widget.setGraphicsEffect(shadow)
 
-        main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(40, 40, 40, 40)
+        # Main layout
+        main_layout = QHBoxLayout(main_widget)
+        main_layout.setContentsMargins(0, 0, 0, 0)  # Ensure no margins
+        main_layout.setSpacing(0)  # Remove any spacing between widgets
 
-        # Title Label
-        title = QLabel('Welcome Back!')
-        title.setAlignment(Qt.AlignCenter)
-        title.setObjectName('titleLabel')
-        main_layout.addWidget(title)
+        # Left side (illustration)
+        left_widget = QWidget()
+        left_layout = QVBoxLayout(left_widget)
+        left_layout.setContentsMargins(0, 0, 0, 0)  # Remove all margins
+        left_layout.setSpacing(0)  # Remove any internal spacing
 
-        # Username Field
-        username_layout = QHBoxLayout()
-        username_icon = QLabel()
-        username_pixmap = QPixmap('user_icon.png').scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        username_icon.setPixmap(username_pixmap)
-        username_field = QLineEdit()
-        username_field.setPlaceholderText('Username')
-        username_layout.addWidget(username_icon)
-        username_layout.addWidget(username_field)
-        main_layout.addLayout(username_layout)
+        illustration = QLabel()
+        pixmap = QPixmap("../images/login_background.jpg")  # Your uploaded image
+        illustration.setPixmap(
+            pixmap.scaled(500, 700, Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
+        left_layout.addWidget(illustration, alignment=Qt.AlignLeft | Qt.AlignTop)
 
-        # Password Field
-        password_layout = QHBoxLayout()
-        password_icon = QLabel()
-        password_pixmap = QPixmap('lock_icon.png').scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        password_icon.setPixmap(password_pixmap)
-        password_field = QLineEdit()
-        password_field.setPlaceholderText('Password')
-        password_field.setEchoMode(QLineEdit.Password)
-        password_layout.addWidget(password_icon)
-        password_layout.addWidget(password_field)
-        main_layout.addLayout(password_layout)
+        # Apply 50% opacity
+        opacity_effect = QGraphicsOpacityEffect()
+        opacity_effect.setOpacity(0.95)  # 50% transparency
+        illustration.setGraphicsEffect(opacity_effect)
 
-        # Remember Me Checkbox and Forgot Password
-        options_layout = QHBoxLayout()
-        remember_me_checkbox = QCheckBox('Remember Me')
-        options_layout.addWidget(remember_me_checkbox)
-        options_layout.addStretch()
-        forgot_password_label = QLabel('Forgot Password?')
-        forgot_password_label.setObjectName('forgotPassword')
-        options_layout.addWidget(forgot_password_label)
-        main_layout.addLayout(options_layout)
+        # Make sure the left widget background is transparent
+        left_widget.setStyleSheet("background-color: transparent;")
 
-        # Login Button
-        login_button = QPushButton('Login')
-        login_button.clicked.connect(lambda: self.login(username_field, password_field))
-        main_layout.addWidget(login_button)
+        main_layout.addWidget(left_widget)
 
-        # Or Separator
+        # Right side (login form)
+        right_widget = QWidget()
+        right_layout = QVBoxLayout(right_widget)
+        right_layout.setContentsMargins(20, 20, 20, 20)
+
+        # Close button
+        close_button = QPushButton("×")
+        close_button.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                color: #000000;
+                font-size: 20px;
+                border: none;
+            }
+            QPushButton:hover {
+                color: #FF0000;
+            }
+        """)
+        close_button.clicked.connect(self.close)
+        right_layout.addWidget(close_button, alignment=Qt.AlignRight)
+
+        # Logo
+        logo_label = QLabel("Login")
+        logo_label.setAlignment(Qt.AlignLeft)
+        logo_label.setFont(QFont("Segoe UI", 18, QFont.Bold))
+        right_layout.addWidget(logo_label)
+        logo_label.setStyleSheet("""
+            QLabel{
+                font: 18px bold 'Segoe UI';
+            }
+        """)
+        logo_label.setAlignment(Qt.AlignCenter)
+
+        # User icon
+        user_icon = QLabel()
+        user_pixmap = QPixmap("../images/img.png")  # Replace with your user icon
+        user_icon.setPixmap(user_pixmap.scaled(64, 64, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        right_layout.addWidget(user_icon, alignment=Qt.AlignCenter)
+
+        # Username field
+        self.username_field = QLineEdit()
+        self.username_field.setPlaceholderText("Username")
+        right_layout.addWidget(self.username_field)
+        right_layout.addWidget(self.username_field, alignment=Qt.AlignRight)
+        self.username_field.setStyleSheet("""
+             QLineEdit{
+                width:400px;
+                font: 14px 'Segoe UI';
+             }
+        """)
+
+        def on_username_focus_in(event):
+            if self.username_field.placeholderText() == "Username":
+                self.username_field.setPlaceholderText("")
+            QLineEdit.focusInEvent(self.username_field, event)
+
+        # Override the focusOutEvent to restore the placeholder text if empty
+        def on_username_focus_out(event):
+            if not self.username_field.text():
+                self.username_field.setPlaceholderText("Username")
+            QLineEdit.focusOutEvent(self.username_field, event)
+
+        # Connect the events for username field
+        self.username_field.focusInEvent = on_username_focus_in
+        self.username_field.focusOutEvent = on_username_focus_out
+
+        # Password field
+        self.password_field = QLineEdit()
+        self.password_field.setPlaceholderText("Password")
+        self.password_field.setEchoMode(QLineEdit.Password)
+        right_layout.addWidget(self.password_field, alignment=Qt.AlignRight)
+        self.password_field.setStyleSheet("""
+            QLineEdit{
+                width:400px;
+                font: 14px 'Segoe UI';
+             }
+        """)
+
+        def on_focus_in(event):
+            if self.password_field.placeholderText() == "Password":
+                self.password_field.setPlaceholderText("")
+            QLineEdit.focusInEvent(self.password_field, event)
+
+        # Override the focusOutEvent to restore the placeholder text if empty
+        def on_focus_out(event):
+            if not self.password_field.text():
+                self.password_field.setPlaceholderText("Password")
+            QLineEdit.focusOutEvent(self.password_field, event)
+
+        # Connect the events
+        self.password_field.focusInEvent = on_focus_in
+        self.password_field.focusOutEvent = on_focus_out
+
+        # Login button
+        login_button = QPushButton("Login")
+        login_button.clicked.connect(self.login)
+        right_layout.addWidget(login_button, alignment=Qt.AlignCenter)
+        login_button.setStyleSheet("""
+        QPushButton {
+            color: #000000;
+            background-color: #85def1;
+            width: 200px;
+            border: 1.5px solid black;
+        }
+        QPushButton:hover {
+            background-color: #9de5f4;
+        }""")
+
         or_layout = QHBoxLayout()
         or_layout.addWidget(self.create_line())
         or_label = QLabel('OR')
         or_label.setAlignment(Qt.AlignCenter)
         or_layout.addWidget(or_label)
         or_layout.addWidget(self.create_line())
-        main_layout.addLayout(or_layout)
+        right_layout.addLayout(or_layout)
 
         # Face Recognition Login Button
         face_login_button = QPushButton('Login with Face Recognition')
         face_login_button.clicked.connect(self.face_login)
         face_login_button.setStyleSheet("""
+        QPushButton {
+            color: #000000;
+            background-color: #85def1;
+            width: 200px;
+            border: 1.5px solid black;
+        }
+        QPushButton:hover {
+            background-color: #9de5f4;
+        }""")
+        right_layout.addWidget(face_login_button, alignment=Qt.AlignCenter)
+
+        # Remember me and Forgot Password
+        options_layout = QHBoxLayout()
+        self.remember_me = QCheckBox("Remember me")
+        options_layout.addWidget(self.remember_me)
+        right_layout.addLayout(options_layout)
+        main_layout.addWidget(right_widget)
+
+        # Set the main widget as the central widget
+        outer_layout = QVBoxLayout(self)
+        outer_layout.addWidget(main_widget)
+        self.setLayout(outer_layout)
+
+        # Apply styles
+        self.setStyleSheet("""
+            QWidget {
+                color: #000000;
+                font-family: 'Arial', sans-serif;
+            }
+            QLineEdit {
+                padding: 10px;
+                border: 2px solid #000000;
+                border-radius: 20px;
+                background-color: #FFFFFF;
+                color: #000000;
+            }
             QPushButton {
-                background-color: #28A745;
+                padding: 10px;
+                background-color: #000000;
+                color: #FFFF00;
+                border: none;
+                border-radius: 20px;
+                font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #218838;
+                background-color: #333333;
             }
         """)
-        main_layout.addWidget(face_login_button)
-
-        # Spacer
-        main_layout.addStretch()
-
-        # Create Account Link
-        signup_layout = QHBoxLayout()
-        signup_label = QLabel("Don't have an account?")
-        signup_link = QLabel('Sign Up')
-        signup_link.setObjectName('forgotPassword')
-        signup_layout.addStretch()
-        signup_layout.addWidget(signup_label)
-        signup_layout.addWidget(signup_link)
-        signup_layout.addStretch()
-        main_layout.addLayout(signup_layout)
-
-        self.status = QLabel('')
-        self.status.setAlignment(Qt.AlignCenter)
-        main_layout.addWidget(self.status)
-
-        self.setLayout(main_layout)
 
     def create_line(self):
-        line = QLabel()
-        line.setFrameShape(QLabel.HLine)
-        line.setFrameShadow(QLabel.Sunken)
-        line.setStyleSheet("color: #CCCCCC;")
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        line.setStyleSheet("background-color: #000000;")  # Set color and height
         return line
 
-    def login(self, username_field, password_field):
+    def login(self):
+        print("Invoked login method")
         # Implement your login logic here
-        username = username_field.text()
-        password = password_field.text()
+        username = self.username_field.text()
+        password = self.password_field.text()
+
         print(f"Login attempt - Username: {username}, Password: {password}")
 
         data = person_ref.get()
@@ -192,8 +279,10 @@ class LoginWindow(QWidget):
 
     def face_login(self):
         # This will trigger the face recognition process
-        self.status.setText("Face recognition login initiated")
+        print("triggered face login")
         successful_login_userID = start_face_recognition(person_ref)
+
+        # todo remove to ensure successful login is brought to main menu( for demo purpose )
 
         # if successful_login_userID:
         #     print("Face recognized. Proceeding to main menu.")
@@ -307,8 +396,6 @@ class MainMenuWindow(QWidget):
             print("Logout canceled")
 
     def closeEvent(self, event):
-        # Handle window close event
-        print("MainMenuWindow closed")
         super().closeEvent(event)
 
 
