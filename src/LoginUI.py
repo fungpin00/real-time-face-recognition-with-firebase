@@ -183,6 +183,12 @@ class LoginWindow(QWidget):
             background-color: #9de5f4;
         }""")
 
+        # Error message label (initially hidden)
+        self.error_message = QLabel("")
+        self.error_message.setAlignment(Qt.AlignCenter)
+        self.error_message.setStyleSheet("color: red; font-size: 14px;")
+        right_layout.addWidget(self.error_message)
+
         or_layout = QHBoxLayout()
         or_layout.addWidget(self.create_line())
         or_label = QLabel('OR')
@@ -275,7 +281,9 @@ class LoginWindow(QWidget):
             self.open_main_menu(succesful_login_userID)
             self.hide()
         else:
-            print("Login failed")
+            # Update the error message label and make it visible
+            self.error_message.setText("Invalid login credentials. Please try again.")
+            self.error_message.setVisible(True)
 
     def face_login(self):
         # This will trigger the face recognition process
