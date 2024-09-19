@@ -124,9 +124,10 @@ def create_new_user_with_image(username, password, file_path):
 # print("All persons have been added to the database with their encodings")
 
 
+#THIS SCRIPT IS TO CREATE NEW USER WITH IMAGE
 if __name__ == '__main__':
     # Path to the image file to upload
-    image_path = 'images/REPLACE_YOUR_IMAGE_PATH_HERE'
+    image_path = '..images/REPLACE_YOUR_IMAGE_PATH_HERE'
 
     # New user information
     new_username = input("Please enter your username: ")

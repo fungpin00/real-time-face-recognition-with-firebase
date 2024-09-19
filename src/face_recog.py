@@ -2,8 +2,11 @@ import cv2
 import face_recognition
 import numpy as np
 
-FACE_DISTANCE_THRESHOLD = 0.45
+FACE_DISTANCE_THRESHOLD = 0.4
 model_list = ["cnn","hog"]
+FACE_DISTANCE_THRESHOLD = 0.4  # Lowered from 0.45 for stricter matching
+MODEL = "cnn"  # Using CNN model for better accuracy
+MIN_FACE_SIZE = 20  # Minimum face size to detect
 
 def start_face_recognition(db_reference):
     data = db_reference.get()
@@ -12,7 +15,7 @@ def start_face_recognition(db_reference):
         existing_face_name = {}
         # todo (change count if want to include everyone's encoding)
         count = 0
-        limit = 20
+        limit = 99999
         for unique_id, person_data in data.items():
             if count >= limit:
                 break
@@ -30,7 +33,7 @@ def start_face_recognition(db_reference):
     # limit data for performance
     # todo (change count if want to include everyone's encoding)
     count = 0
-    limit = 20
+    limit = 99999
     all_encodings = []
     all_names = []
     all_unique_ids = []
@@ -54,7 +57,8 @@ def start_face_recognition(db_reference):
     face_locations = []
     face_names = []
     process_this_frame = True
-
+    consecutive_matches = 0
+    required_matches = 5
     for unique_id, encodings_list in existing_face_encodings.items():
         valid_encodings = [np.array(encoding) for encoding in encodings_list]
         existing_face_encodings[unique_id] = valid_encodings
@@ -72,7 +76,7 @@ def start_face_recognition(db_reference):
             # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
             rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
 
-            face_locations = face_recognition.face_locations(rgb_small_frame, model=model_list[1])
+            face_locations = face_recognition.face_locations(rgb_small_frame, model=model_list[0])
             face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
             face_names = []
@@ -85,14 +89,22 @@ def start_face_recognition(db_reference):
                 if face_distances[best_match_index] < FACE_DISTANCE_THRESHOLD:
                     name = all_names[best_match_index]
                     known_user_id = all_unique_ids[best_match_index]
+                    consecutive_matches += 1
+                    if consecutive_matches >= required_matches:
+                        video_capture.release()
+                        cv2.destroyAllWindows()
+                        return known_user_id
                 else:
                     name = "Unknown"
+                    consecutive_matches = 0
                 face_names.append(name)
 
         process_this_frame = not process_this_frame
 
         # Display the results
         for (top, right, bottom, left), name in zip(face_locations, face_names):
+            if (bottom - top) < MIN_FACE_SIZE or (right - left) < MIN_FACE_SIZE:
+                continue
             # Scale back up face locations since the frame we detected in was scaled to 1/4 size
             top *= 4
             right *= 4
@@ -106,7 +118,7 @@ def start_face_recognition(db_reference):
                 color = (0, 0, 255)  # Red for unknown faces
 
             # Draw a box around the face
-            cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
+            cv2.rectangle(frame, (left, top), (right, bottom), color,2)
 
             # Draw a label with a name below the face
             cv2.rectangle(frame, (left, bottom - 35), (right, bottom), color, cv2.FILLED)
