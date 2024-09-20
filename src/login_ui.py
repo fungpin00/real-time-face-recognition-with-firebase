@@ -8,7 +8,8 @@ from PyQt5.QtWidgets import (
     QApplication, QMessageBox
 )
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
-                             QLineEdit, QPushButton, QCheckBox, QGraphicsDropShadowEffect, QGraphicsOpacityEffect, QFrame)
+                             QLineEdit, QPushButton, QCheckBox, QGraphicsDropShadowEffect, QGraphicsOpacityEffect,
+                             QFrame)
 from firebase_admin import db
 
 from face_recog import start_face_recognition
@@ -26,6 +27,8 @@ class LoginWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
+        self._is_dragging = False
+        self._drag_position = None
 
     def initUI(self):
         self.setWindowTitle('Login')
@@ -258,12 +261,8 @@ class LoginWindow(QWidget):
         return line
 
     def login(self):
-        print("Invoked login method")
-        # Implement your login logic here
         username = self.username_field.text()
         password = self.password_field.text()
-
-        print(f"Login attempt - Username: {username}, Password: {password}")
 
         data = person_ref.get()
         login_flag = False
@@ -273,42 +272,46 @@ class LoginWindow(QWidget):
                 current_password = person_data.get('password')
                 if hashlib.sha256(password.encode()).hexdigest() == current_password:
                     login_flag = True
-                    succesful_login_userID = unique_id
+                    successful_login_user_id = unique_id
                     break
 
         if login_flag:
-            print("Login success")
-            self.open_main_menu(succesful_login_userID)
+            self.open_main_menu(successful_login_user_id)
             self.hide()
         else:
-            # Update the error message label and make it visible
             self.error_message.setText("Invalid login credentials. Please try again.")
             self.error_message.setVisible(True)
 
     def face_login(self):
-        # This will trigger the face recognition process
-        print("triggered face login")
-        successful_login_userID = start_face_recognition(person_ref)
+        successful_login_user_id = start_face_recognition(person_ref)
 
-        # todo remove to ensure successful login is brought to main menu( for demo purpose )
+        if successful_login_user_id:
+            self.set("Face recognized. Proceeding to main menu.")
+            self.open_main_menu(successful_login_user_id)
+            self.hide()  # Hide the login window after opening the main menu
+        else:
+            self.status.setText("Face recognition failed. Please try again.")
 
-        # if successful_login_userID:
-        #     print("Face recognized. Proceeding to main menu.")
-        #     self.open_main_menu(successful_login_userID)
-        #     self.hide()  # Hide the login window after opening the main menu
-        # else:
-        #     print("Face recognition failed or no known face detected.")
-        #     self.status.setText("Face recognition failed. Please try again.")
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self._is_dragging = True
+            self._drag_position = event.globalPos() - self.frameGeometry().topLeft()
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if self._is_dragging and event.buttons() & Qt.LeftButton:
+            self.move(event.globalPos() - self._drag_position)
+            event.accept()
+
+    def mouseReleaseEvent(self, event):
+        self._is_dragging = False
 
     def open_main_menu(self, user_id):
-        print(f"Opening main menu for user_id: {user_id}")
         user_data = person_ref.child(user_id).get()
         if user_data:
-            print("User data retrieved successfully.")
             self.main_menu_window = MainMenuWindow(user_data)
             self.main_menu_window.show()
         else:
-            print("Failed to retrieve user data.")
             error_dialog = QMessageBox()
             error_dialog.setWindowTitle("Error")
             error_dialog.setText("Failed to open main menu. Please try again.")
@@ -324,13 +327,12 @@ class MainMenuWindow(QWidget):
 
     def initUI(self):
         try:
-            print("Initializing MainMenuWindow UI.")
             self.setWindowTitle('Main Menu')
             self.setFixedSize(800, 600)
             self.setStyleSheet("""
                 QWidget {
                     background-color: #f0f0f0;
-                    font-family: 'Arial', sans-serif;
+                    font-family: 'Segoe UI', sans-serif;
                     font-size: 14px;
                     color: #333333;
                 }
@@ -399,9 +401,6 @@ class MainMenuWindow(QWidget):
             self.close()
             if self.parent():
                 self.parent().show()
-            print("User logged out")
-        else:
-            print("Logout canceled")
 
     def closeEvent(self, event):
         super().closeEvent(event)

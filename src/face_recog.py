@@ -4,9 +4,9 @@ import numpy as np
 
 FACE_DISTANCE_THRESHOLD = 0.4
 model_list = ["cnn","hog"]
-FACE_DISTANCE_THRESHOLD = 0.4  # Lowered from 0.45 for stricter matching
-MODEL = "cnn"  # Using CNN model for better accuracy
-MIN_FACE_SIZE = 20  # Minimum face size to detect
+MODEL = "cnn"
+MIN_FACE_SIZE = 20
+
 
 def start_face_recognition(db_reference):
     data = db_reference.get()
@@ -19,19 +19,15 @@ def start_face_recognition(db_reference):
         for unique_id, person_data in data.items():
             if count >= limit:
                 break
-            # Retrieve the encodings and name
             encodings = person_data.get('encodings', [])
             name = person_data.get('name', None)
 
-            # Filter out any None values
             valid_encodings = [encoding for encoding in encodings if encoding is not None]
 
-            # Store the valid encodings and name
             existing_face_encodings[unique_id] = valid_encodings
             existing_face_name[unique_id] = name
             count += 1
     # limit data for performance
-    # todo (change count if want to include everyone's encoding)
     count = 0
     limit = 99999
     all_encodings = []
@@ -41,19 +37,15 @@ def start_face_recognition(db_reference):
     for unique_id, encodings_list in existing_face_encodings.items():
         if count >= limit:
             break
-        name = existing_face_name[unique_id]  # Get the corresponding name
+        name = existing_face_name[unique_id]
         for encoding in encodings_list:
-            all_encodings.append(encoding)  # Add each encoding to the flat list
-            all_names.append(name)  # Add the corresponding name for each encoding
-            all_unique_ids.append(unique_id)  # Add the unique_id
+            all_encodings.append(encoding)
+            all_names.append(name)
+            all_unique_ids.append(unique_id)
             count += 1
 
     video_capture = cv2.VideoCapture(0)
 
-    # Load a sample picture and learn how to recognize it.
-
-    # Create arrays of known face encodings and their names
-    # Initialize some variables
     face_locations = []
     face_names = []
     process_this_frame = True
@@ -65,10 +57,8 @@ def start_face_recognition(db_reference):
 
     while True:
         name = "Unknown"
-        # Grab a single frame of video
         ret, frame = video_capture.read()
 
-        # Only process every other frame of video to save time
         if process_this_frame:
             # Resize frame of video to 1/4 size for faster face recognition processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
@@ -101,40 +91,30 @@ def start_face_recognition(db_reference):
 
         process_this_frame = not process_this_frame
 
-        # Display the results
         for (top, right, bottom, left), name in zip(face_locations, face_names):
             if (bottom - top) < MIN_FACE_SIZE or (right - left) < MIN_FACE_SIZE:
                 continue
-            # Scale back up face locations since the frame we detected in was scaled to 1/4 size
             top *= 4
             right *= 4
             bottom *= 4
             left *= 4
 
-            # Change color based on recognition status
             if name != "Unknown":
-                color = (0, 255, 0)  # Green for known faces
+                color = (0, 255, 0)
             else:
-                color = (0, 0, 255)  # Red for unknown faces
+                color = (0, 0, 255)
 
-            # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), color,2)
-
-            # Draw a label with a name below the face
             cv2.rectangle(frame, (left, bottom - 35), (right, bottom), color, cv2.FILLED)
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
-        # Display the resulting image
         cv2.imshow('Face recognition', frame)
 
-        # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        # todo remove to ensure successful login is returned
-
-        # if name != "Unknown":
-        #     video_capture.release()
-        #     cv2.destroyAllWindows()
-        #     return known_user_id
+        if name != "Unknown":
+            video_capture.release()
+            cv2.destroyAllWindows()
+            return known_user_id
