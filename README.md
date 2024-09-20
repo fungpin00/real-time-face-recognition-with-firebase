@@ -1,4 +1,4 @@
-# Face Recognition Login System with LFW Dataset
+# Face Recognition Login System with Firebase
 
 This project implements a face recognition-based login system using the Labeled Faces in the Wild \(LFW\) dataset. The system allows users to log in via traditional credentials \(username/password\) or by recognising their face in real-time using their webcam. The project integrates with Firebase for data storage and PyQt5 for the graphical user interface \(GUI\).
 
