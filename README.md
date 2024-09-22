@@ -6,7 +6,6 @@ This project implements a face recognition-based login system using the Labeled 
 - **Python 3.x**: Ensure Python 3.6 or higher is installed, preferably not version after 3.10.5.
 - **Firebase Project**: Set up a Firebase project and add Firebase Realtime Database.
 - **Webcam**: A webcam is required for face recognition login.
-- 
 ## Installation
 
 Follow these steps to set up the project on your machine:
