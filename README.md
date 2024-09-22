@@ -74,7 +74,7 @@ This will launch the login window, allowing users to choose between login method
 │   ├── login_background.jpg                    # Background for login UI
 │   └── img.png                                 # Placeholder user icon
 ├── face_recog.py                               # Face recognition functions
-├── face_recognition_login.py                   # Main file to run the login system
+├── login_ui.py                   # Main file to run the login system
 └── README.md                                   # Project documentation
 ```
 
