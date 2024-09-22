@@ -2,6 +2,11 @@
 
 This project implements a face recognition-based login system using the Labeled Faces in the Wild \(LFW\) dataset. The system allows users to log in via traditional credentials \(username/password\) or by recognising their face in real-time using their webcam. The project integrates with Firebase for data storage and PyQt5 for the graphical user interface \(GUI\).
 
+## Prerequisites
+- **Python 3.x**: Ensure Python 3.6 or higher is installed, preferably not version after 3.10.5.
+- **Firebase Project**: Set up a Firebase project and add Firebase Realtime Database.
+- **Webcam**: A webcam is required for face recognition login.
+- 
 ## Installation
 
 Follow these steps to set up the project on your machine:
@@ -36,11 +41,6 @@ pip install PyQt5
 ```python
 cred_obj = firebase_admin.credentials.Certificate("path/to/your-firebase-adminsdk.json")
 ```
-
-## Prerequisites
-- **Python 3.x**: Ensure Python 3.6 or higher is installed.
-- **Firebase Project**: Set up a Firebase project and add Firebase Realtime Database.
-- **Webcam**: A webcam is required for face recognition login.
 
 ## Features
 - **Login via Credentials**: Users can log in using their username and password, securely stored in the Firebase Realtime Database.
